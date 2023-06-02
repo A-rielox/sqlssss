@@ -13,10 +13,8 @@ USE sql_invoicing;
 
 -- a parte de sobre numeros se pueden aplicar sobre strings o dates
 
-SELECT 
-    *
-FROM
-    invoices;
+SELECT *
+FROM invoices;
 
 -- COUNT(*) incluye los null 			***
 
@@ -26,12 +24,10 @@ SELECT
     COUNT(invoice_total) AS 'Cantidad de records',
     COUNT(payment_date) AS 'Invoices pagados',
     COUNT(*) AS 'Total records'
-FROM
-    invoices;
+FROM invoices;
 
 
--- si pongo filtros => los calculos se hacen con los 
--- datos filtrados
+-- si pongo filtros => los calculos se hacen con los datos filtrados
 
 SELECT COUNT(invoice_id)   -- 17
 FROM invoices;
@@ -54,10 +50,10 @@ FROM invoices;
 
 
 -- generar la tabla
--- Date Range, Total sales, Total Payments, What we expext
+-- Date Range, 		   Total sales, Total Payments, What we expext
 -- First half of 2019	1539.07		662.69		876.38
 -- Second half of 2019	1051.53		355.02		696.51
--- Second half of 2019	2590.60		1017.71		1572.89
+-- Total				2590.60		1017.71		1572.89
 
 SELECT *
 FROM invoices;
@@ -127,6 +123,8 @@ ORDER BY total_sales;
 -- sacar las total sales x state y city
 SELECT *
 FROM clients;
+SELECT *
+FROM invoices;
 
 SELECT 
     c.city,
@@ -148,18 +146,16 @@ GROUP BY c.city , c.state;
 -- generar la tabla , con tabla payments
 -- date, 		payment_method, total_payment
 -- 2019-01-03	Credit Card		74.55
--- 2019-01-08	Credit Card		32.77
 -- 2019-01-08	Cash			10.00
 -- 2019-01-11	Credit Card		0.03
--- 2019-01-15	Credit Card		148.41
--- 2019-01-26	Credit Card		87.44
--- 2019-02-12	Credit Card		8.18
-USE sql_invoicing;
-SELECT 
-    *
-FROM
-    payments;
+-- ...
 
+USE sql_invoicing;
+
+SELECT *
+FROM payments;
+SELECT *
+FROM payment_methods;
 
 SELECT 
     p.date, pm.name AS payment_method, SUM(p.amount) AS total_payment
@@ -178,10 +174,7 @@ ORDER BY p.date ASC;
 
 --				HAVING
 
--- p' cuando hay q filtrar por los resultados
--- d las aggregate fcns ( p' filtrar despues del GROUP BY )
--- las columnas ocupadas en el HAVING tienen que estar en el select
--- el WHERE puede tener cualquier columna
+-- p' cuando hay q filtrar por los resultados d las aggregate fcns ( p' filtrar despues del GROUP BY ) las columnas ocupadas en el HAVING tienen que estar en el select, el WHERE puede tener cualquier columna
 
 
 
@@ -230,20 +223,19 @@ GROUP BY client_id
 
 USE sql_store;
 
-select *
-from customers;
-select *
-from orders;
-select *
-from order_items;
+SELECT *
+FROM customers;
+SELECT *
+FROM orders;
+SELECT  *
+FROM order_items;
 
-
-select *
-from customers c
-join orders o
-using (customer_id)
-join order_items oi
-using(order_id);
+SELECT *
+FROM customers c
+JOIN
+    orders o USING (customer_id)
+JOIN
+    order_items oi USING (order_id);
 
 SELECT 
     customer_id,
@@ -328,7 +320,37 @@ GROUP BY pm.name WITH ROLLUP; -- al ocupar rollup NO se puede ocupar el alias
 
 
 
--- 		43
+-- 	    				SUB QUERIES
+
+
+-- find products that are more expensive than lettuce ( id = 3 )
+
+USE sql_store;
+
+SELECT *
+FROM products
+WHERE unit_price > (
+    SELECT unit_price
+    FROM products
+    WHERE product_id = 3
+	);
+
+
+
+
+
+
+-- in sql_hr DB , find employees whose earn more than average
+
+USE sql_hr;
+
+SELECT first_name, job_title, salary
+FROM employees
+WHERE salary > (
+		SELECT AVG(salary)
+		FROM employees
+)
+ORDER BY salary;
 
 
 
@@ -336,6 +358,365 @@ GROUP BY pm.name WITH ROLLUP; -- al ocupar rollup NO se puede ocupar el alias
 
 
 
+-- find the products that have never been ordered
+
+USE sql_store;
+
+SELECT *
+FROM products;
+SELECT *
+FROM order_items;
+
+SELECT *
+FROM products
+WHERE product_id NOT IN (
+	SELECT DISTINCT product_id
+	FROM order_items
+);
+
+
+
+
+-- encontrar clientes sin invoices
+
+USE sql_invoicing;
+
+SELECT *
+FROM clients;
+SELECT *
+FROM invoices;
+
+SELECT *
+FROM clients
+WHERE client_id NOT IN(
+	SELECT DISTINCT client_id
+    FROM invoices
+);
+
+
+
+
+--					SUBQUERIES VS JOINS
+
+-- el anterior pero con JOIN
+SELECT *
+FROM clients c
+LEFT JOIN invoices i
+USING (client_id)
+WHERE i.client_id IS NULL;
+
+
+
+
+-- find customers who have ordered lettuce ( id = 3 ) and select customer_id, first_name, last_name
+
+USE sql_store;
+
+SELECT *
+FROM customers;
+SELECT *
+FROM orders;
+SELECT *
+FROM order_items;
+
+SELECT customer_id, first_name, last_name
+FROM customers
+WHERE customer_id IN (
+	SELECT customer_id
+    FROM orders
+    WHERE order_id IN (
+		SELECT order_id
+        FROM order_items
+		WHERE product_id = 3
+	)
+);
+
+SELECT DISTINCT c.customer_id, c.first_name, c.last_name
+FROM customers c
+JOIN orders o
+	USING(customer_id)
+JOIN order_items oi
+	USING (order_id)
+WHERE oi.product_id = 3;
+
+
+
+
+
+-- 	    ALL KEYWORD
+
+
+
+-- select invoices larger than all invoices of client 3
+
+USE sql_invoicing;
+
+SELECT *
+FROM invoices;
+
+SELECT *
+FROM invoices
+WHERE invoice_total > ALL (
+	SELECT invoice_total -- podria usar MAX() y no ocupar ALL
+	FROM invoices
+	WHERE client_id = 3
+);
+
+
+
+
+
+
+
+-- 	    ANY KEYWORD
+
+-- select clients with at least two invoices
+
+SELECT *
+FROM invoices;
+
+SELECT *
+FROM clients
+WHERE client_id IN (
+	SELECT client_id
+	FROM invoices
+	GROUP BY client_id
+	HAVING COUNT(client_id) >= 2
+);
+
+-- con ANY
+SELECT *
+FROM clients
+WHERE client_id = ANY (
+	SELECT client_id
+	FROM invoices
+	GROUP BY client_id
+	HAVING COUNT(client_id) >= 2
+);
+
+
+
+
+
+-- 		CORRELATED SUB-QUERIES			******
+
+
+-- SEELCT EMPLOYEES WHOSE SALARY IS ABOVE THE AVERAGE IN THEIR OFFICE
+USE sql_hr;
+
+-- este es el avg en c/office, pero no me sirve de esta forma
+SELECT office_id, AVG(salary)
+FROM employees
+GROUP BY office_id;
+
+SELECT *
+FROM employees;
+
+SELECT *
+FROM employees e
+WHERE salary > (
+	SELECT AVG(salary)
+    FROM employees
+    WHERE office_id = e.office_id
+);
+
+
+
+-- get invoices that are larger than the client's average invoice amount
+-- p'c/cliente entregar los invoices q sean + grandes q su promedio
+
+USE sql_invoicing;
+
+SELECT *
+FROM invoices;
+
+-- p' checar mi resp
+SELECT client_id, AVG(invoice_total)
+FROM invoices
+GROUP BY client_id;
+-- client_id, AVG(invoice_total)
+-- 		1		160.578000
+-- 		2		101.790000
+-- 		3		141.180000
+-- 		5		163.336667
+
+SELECT *
+FROM invoices i
+WHERE invoice_total > (
+	SELECT AVG(invoice_total)
+    FROM invoices
+    WHERE client_id = i.client_id
+);
+
+
+
+
+
+
+
+--		EXISTS
+
+
+-- select clients that have an invoice
+
+USE sql_invoicing;
+
+SELECT *
+FROM invoices;
+SELECT *
+FROM clients;
+
+SELECT DISTINCT client_id
+FROM clients c
+JOIN invoices i
+USING(client_id);
+
+-- con subquery
+SELECT *
+FROM clients
+WHERE client_id IN (
+	SELECT DISTINCT client_id
+    FROM invoices
+);
+
+-- con EXISTS y CORRELATED QUERY
+SELECT *
+FROM clients c
+WHERE EXISTS (
+	SELECT client_id
+    FROM invoices
+    WHERE client_id = c.client_id
+);
+
+
+
+
+-- find the products that have never been ordered in sql_store
+
+USE sql_store;
+
+SELECT *
+FROM order_items;
+SELECT *
+FROM products;
+
+SELECT *
+FROM products p
+LEFT JOIN order_items oi USING(product_id)
+WHERE oi.order_id IS NULL;
+-- con subQ
+SELECT *
+FROM products
+WHERE product_id NOT IN (
+	SELECT DISTINCT product_id
+    FROM order_items    
+);
+
+SELECT *
+FROM products p
+WHERE NOT EXISTS (
+	SELECT DISTINCT product_id
+    FROM order_items
+    WHERE product_id = p.product_id
+);
+
+
+
+
+
+
+-- 			subQ en el SELECT
+
+
+
+-- obtener
+-- invoice_id, invoice_total, invoice_average, difference
+-- 1			101.79			152.388235		-50.598235
+-- 2			175.32			152.388235		22.931765
+-- 3			147.99			152.388235		-4.398235
+-- ...
+
+USE sql_invoicing;
+
+SELECT *
+FROM invoices;
+
+SELECT 
+	invoice_id,
+    invoice_total,
+    (
+		SELECT AVG(invoice_total)
+        FROM invoices
+    ) AS invoice_average,
+    -- invoice_total - invoice_average no puede ser con alias
+    invoice_total - (SELECT invoice_average) AS difference
+FROM invoices;
+
+
+
+
+
+-- obtener				******
+
+SELECT *
+FROM clients;
+SELECT *
+FROM invoices;
+
+SELECT 
+	client_id,
+    name,
+    (
+		SELECT SUM(invoice_total)
+        FROM invoices
+        WHERE client_id = c.client_id
+    ) AS total_sales,
+    (
+		SELECT AVG(invoice_total)
+        FROM invoices
+    ) AS average,
+    (SELECT total_sales - average) AS difference
+FROM clients c;
+
+
+
+
+
+-- 			subQ en el FROM
+
+-- se requiere darle un alias a la tabla del subQ
+-- es básicamente ocupar la tabla anterior ( o cualquier tabla obtenida x un query ) y ocuparla en un FROM.
+
+-- esto suele hacerce con views, a no ser que sea una subQ muy sencilla
+
+SELECT * 
+FROM (
+	SELECT 
+		client_id,
+		name,
+		(
+			SELECT SUM(invoice_total)
+			FROM invoices
+			WHERE client_id = c.client_id
+		) AS total_sales,
+		(
+			SELECT AVG(invoice_total)
+			FROM invoices
+		) AS average,
+		(SELECT total_sales - average) AS difference
+	FROM clients c
+) AS summary
+WHERE total_sales IS NOT NULL;
+
+
+
+
+
+
+
+
+
+-- 			53
 
 
 
