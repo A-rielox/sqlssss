@@ -13,8 +13,7 @@ USE sql_invoicing;
 
 -- a parte de sobre numeros se pueden aplicar sobre strings o dates
 
-SELECT *
-FROM invoices;
+SELECT * FROM invoices;
 
 -- COUNT(*) incluye los null 			***
 
@@ -39,6 +38,8 @@ WHERE
 
 
 -- DISCTINCT p' q no incluya en los calculos los datos repetidos
+SELECT * FROM invoices;
+
 SELECT 
     COUNT(client_id) AS 'con usuarios repetidos',
     COUNT(DISTINCT client_id) AS 'con usuarios unicos',
@@ -55,9 +56,7 @@ FROM invoices;
 -- Second half of 2019	1051.53		355.02		696.51
 -- Total				2590.60		1017.71		1572.89
 
-SELECT *
-FROM invoices;
-
+SELECT * FROM invoices;
 
 SELECT 
     'First half of 2019' AS 'Date Range',
@@ -103,8 +102,7 @@ WHERE
 
 USE sql_invoicing;
 
-SELECT *
-FROM invoices;
+SELECT * FROM invoices;
 -- los client_id se repiten xc/invoice de un mismo cliente
 -- p' filtrar, primero WHERE y despues GROUP BY
 
@@ -121,10 +119,7 @@ ORDER BY total_sales;
 
 
 -- sacar las total sales x state y city
-SELECT *
-FROM clients;
-SELECT *
-FROM invoices;
+SELECT * FROM clients; SELECT * FROM invoices;
 
 SELECT 
     c.city,
@@ -146,16 +141,14 @@ GROUP BY c.city , c.state;
 -- generar la tabla , con tabla payments
 -- date, 		payment_method, total_payment
 -- 2019-01-03	Credit Card		74.55
+-- ...
 -- 2019-01-08	Cash			10.00
 -- 2019-01-11	Credit Card		0.03
 -- ...
 
 USE sql_invoicing;
 
-SELECT *
-FROM payments;
-SELECT *
-FROM payment_methods;
+SELECT * FROM payments; SELECT * FROM payment_methods;
 
 SELECT 
     p.date, pm.name AS payment_method, SUM(p.amount) AS total_payment
@@ -190,7 +183,7 @@ GROUP BY client_id;
 -- 2	101.79	1
 -- 3	705.90	5
 -- 5	980.02	6
-
+	
 
 -- p' incluir solo los que hayan vendido + de 500 dls
 
@@ -223,19 +216,11 @@ GROUP BY client_id
 
 USE sql_store;
 
-SELECT *
-FROM customers;
-SELECT *
-FROM orders;
-SELECT  *
-FROM order_items;
+SELECT * FROM customers; SELECT * FROM orders; SELECT * FROM order_items;
 
-SELECT *
-FROM customers c
-JOIN
-    orders o USING (customer_id)
-JOIN
-    order_items oi USING (order_id);
+SELECT * FROM customers c
+JOIN orders o USING (customer_id)
+JOIN order_items oi USING (order_id);
 
 SELECT 
     customer_id,
@@ -300,10 +285,7 @@ GROUP BY state , city WITH ROLLUP;
 
 USE sql_invoicing;
 
-SELECT *
-FROM payments;
-SELECT *
-FROM payment_methods;
+SELECT * FROM payments; SELECT * FROM payment_methods;
 
 SELECT 
     pm.name AS payment_method, SUM(p.amount) AS total
@@ -362,10 +344,7 @@ ORDER BY salary;
 
 USE sql_store;
 
-SELECT *
-FROM products;
-SELECT *
-FROM order_items;
+SELECT * FROM products; SELECT * FROM order_items;
 
 SELECT *
 FROM products
@@ -381,10 +360,7 @@ WHERE product_id NOT IN (
 
 USE sql_invoicing;
 
-SELECT *
-FROM clients;
-SELECT *
-FROM invoices;
+SELECT * FROM clients; SELECT * FROM invoices;
 
 SELECT *
 FROM clients
@@ -392,6 +368,8 @@ WHERE client_id NOT IN(
 	SELECT DISTINCT client_id
     FROM invoices
 );
+
+
 
 
 
@@ -412,12 +390,7 @@ WHERE i.client_id IS NULL;
 
 USE sql_store;
 
-SELECT *
-FROM customers;
-SELECT *
-FROM orders;
-SELECT *
-FROM order_items;
+SELECT * FROM customers; SELECT * FROM orders; SELECT * FROM order_items;
 
 SELECT customer_id, first_name, last_name
 FROM customers
@@ -430,6 +403,14 @@ WHERE customer_id IN (
 		WHERE product_id = 3
 	)
 );
+-- ó
+SELECT *
+FROM customers
+WHERE customer_id IN (
+	SELECT customer_id FROM orders o
+    JOIN order_items oi USING(order_id)
+    WHERE oi.product_id = 3
+);
 
 SELECT DISTINCT c.customer_id, c.first_name, c.last_name
 FROM customers c
@@ -441,8 +422,6 @@ WHERE oi.product_id = 3;
 
 
 
-
-
 -- 	    ALL KEYWORD
 
 
@@ -451,8 +430,7 @@ WHERE oi.product_id = 3;
 
 USE sql_invoicing;
 
-SELECT *
-FROM invoices;
+SELECT * FROM invoices;
 
 SELECT *
 FROM invoices
@@ -472,8 +450,7 @@ WHERE invoice_total > ALL (
 
 -- select clients with at least two invoices
 
-SELECT *
-FROM invoices;
+SELECT * FROM invoices;
 
 SELECT *
 FROM clients
@@ -498,19 +475,22 @@ WHERE client_id = ANY (
 
 
 
+
+
 -- 		CORRELATED SUB-QUERIES			******
 
 
 -- SEELCT EMPLOYEES WHOSE SALARY IS ABOVE THE AVERAGE IN THEIR OFFICE
 USE sql_hr;
 
+
+
 -- este es el avg en c/office, pero no me sirve de esta forma
 SELECT office_id, AVG(salary)
 FROM employees
 GROUP BY office_id;
 
-SELECT *
-FROM employees;
+SELECT * FROM employees;
 
 SELECT *
 FROM employees e
@@ -522,13 +502,13 @@ WHERE salary > (
 
 
 
+
 -- get invoices that are larger than the client's average invoice amount
 -- p'c/cliente entregar los invoices q sean + grandes q su promedio
 
 USE sql_invoicing;
 
-SELECT *
-FROM invoices;
+SELECT * FROM invoices;
 
 -- p' checar mi resp
 SELECT client_id, AVG(invoice_total)
@@ -553,18 +533,14 @@ WHERE invoice_total > (
 
 
 
-
---		EXISTS
+--		EXISTS					******
 
 
 -- select clients that have an invoice
 
 USE sql_invoicing;
 
-SELECT *
-FROM invoices;
-SELECT *
-FROM clients;
+SELECT * FROM invoices; SELECT * FROM clients;
 
 SELECT DISTINCT client_id
 FROM clients c
@@ -580,6 +556,8 @@ WHERE client_id IN (
 );
 
 -- con EXISTS y CORRELATED QUERY
+-- p' c/cliente checa si el dato existe ( el del WHERE EXISTS ), si existe => retorna ese cliente y sigue con el otro
+
 SELECT *
 FROM clients c
 WHERE EXISTS (
@@ -589,16 +567,11 @@ WHERE EXISTS (
 );
 
 
-
-
 -- find the products that have never been ordered in sql_store
 
 USE sql_store;
 
-SELECT *
-FROM order_items;
-SELECT *
-FROM products;
+SELECT * FROM order_items; SELECT * FROM products;
 
 SELECT *
 FROM products p
@@ -625,6 +598,7 @@ WHERE NOT EXISTS (
 
 
 
+
 -- 			subQ en el SELECT
 
 
@@ -636,10 +610,10 @@ WHERE NOT EXISTS (
 -- 3			147.99			152.388235		-4.398235
 -- ...
 
+
 USE sql_invoicing;
 
-SELECT *
-FROM invoices;
+SELECT * FROM invoices;
 
 SELECT 
 	invoice_id,
@@ -648,7 +622,7 @@ SELECT
 		SELECT AVG(invoice_total)
         FROM invoices
     ) AS invoice_average,
-    -- invoice_total - invoice_average no puede ser con alias
+    -- invoice_total - invoice_average no puede ser con alias directo tengo q ocupar el SELECT "alias"
     invoice_total - (SELECT invoice_average) AS difference
 FROM invoices;
 
@@ -657,11 +631,14 @@ FROM invoices;
 
 
 -- obtener				******
+-- client_id, name, 	total_sales, average, difference
+-- 1		Vinte		802.89		152.388235	650.501765
+-- 2		Myworks		101.79		152.388235	-50.598235
+-- 3		Yadel		705.90		152.388235	553.511765
+-- 4		Kwideo		null		152.388235	null
+-- 5		Topiclounge	980.02		152.388235	827.631765
 
-SELECT *
-FROM clients;
-SELECT *
-FROM invoices;
+SELECT * FROM clients; SELECT * FROM invoices;
 
 SELECT 
 	client_id,
@@ -675,7 +652,7 @@ SELECT
 		SELECT AVG(invoice_total)
         FROM invoices
     ) AS average,
-    (SELECT total_sales - average) AS difference
+    (SELECT total_sales) - (SELECT average) AS difference
 FROM clients c;
 
 
@@ -717,7 +694,3 @@ WHERE total_sales IS NOT NULL;
 
 
 -- 			53
-
-
-
-

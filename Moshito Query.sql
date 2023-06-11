@@ -8,7 +8,7 @@ ORDER BY first_name;
 
 
 
-SELECT first_name, last_name, YEAR(BIRTH_DATE) AS 'ANHO'
+SELECT first_name, last_name, YEAR(BIRTH_DATE) AS 'AÑO'
 FROM customers
 WHERE birth_date > '1990-01-01';
 
@@ -92,6 +92,7 @@ WHERE last_name LIKE '_o%';
 
 
 -- clientes cuyo telefono termine en 9
+
 SELECT *
 FROM customers
 -- WHERE RIGHT(phone,1) = 9;
@@ -169,6 +170,7 @@ LIMIT 6, 3;
 
 
 -- los 3 customers con mas puntos
+
 SELECT *
 FROM customers
 ORDER BY points DESC
@@ -178,6 +180,8 @@ LIMIT 3;
 
 -- 									INNER JOIN
 
+SELECT * FROM orders;
+SELECT * FROM customers;
 
 SELECT order_id, o.customer_id, last_name, shipped_date
 FROM orders o
@@ -190,8 +194,8 @@ JOIN customers c
 -- el nombre del producto
 USE sql_store;
 
-SELECT *
-FROM products;
+SELECT * FROM products;
+SELECT * FROM order_items;
 
 SELECT order_id, o.product_id, name, quantity, o.unit_price
 FROM order_items o
@@ -225,8 +229,7 @@ JOIN sql_inventory.products p
 
 USE sql_hr;
 
-SELECT *
-FROM employees;
+SELECT * FROM employees;
 
 SELECT e.employee_id, e.first_name, e.last_name,
 		e.reports_to, m.last_name AS 'Boss'
@@ -238,12 +241,13 @@ JOIN employees m
 
 -- 								JOIN MULTIPLE TABLES
 
--- en tabla orderes sale "customer_id de customers" y
+-- en tabla orders sale "customer_id de customers" y
 -- "status de order_statuses"
 USE sql_store;
 
-SELECT *
-FROM orders;
+SELECT * FROM orders;
+SELECT * FROM customers;
+SELECT * FROM order_statuses;
 
 SELECT o.order_id, o.order_date, c.first_name, c.last_name, o.status, os.name
 FROM orders o
@@ -258,7 +262,12 @@ JOIN customers c
 -- en sql_invoicing.payments corresponde a los pagos hechos xlos 
 -- invoices, unir sql_invoicing para q salga el nombre del cliente y el 
 -- metodo d pago
+
 USE sql_invoicing;
+
+SELECT * FROM payments;
+SELECT * FROM clients;
+SELECT * FROM payment_methods;
 
 SELECT *
 FROM payments p
@@ -278,6 +287,9 @@ join payment_methods pm
 -- tabla order_items tiene PK order_id y product_id
 -- tabla order_item_notes tiene 1 PK y los 2 campos de arriba
 USE sql_store;
+
+SELECT * FROM order_items;
+SELECT * FROM order_item_notes;
 
 SELECT *
 FROM order_items oi
@@ -318,6 +330,9 @@ WHERE o.customer_id = c.customer_id;
 
 USE sql_store;
 
+SELECT * FROM customers;
+SELECT * FROM orders;
+
 SELECT c.customer_id, c.first_name, o.order_id
 FROM customers c
 JOIN orders o
@@ -335,12 +350,9 @@ LEFT JOIN orders o
 
 -- tabla q tenga "product_id", "name" y "quantity"
 
-SELECT *
-FROM order_items
+SELECT * FROM order_items
 ORDER BY product_id;
-
-SELECT *
-FROM products;
+SELECT * FROM products;
 
 SELECT p.product_id, p.name, oi.quantity
 FROM products p
@@ -354,6 +366,10 @@ LEFT JOIN order_items oi
 -- OUTER JOIN entre varias tablas
 
 -- todos los customers tengan o no una orden
+
+SELECT * FROM customers;
+SELECT * FROM orders;
+
 SELECT c.customer_id, c.first_name, o.order_id, o.shipper_id, s.name
 FROM customers c
 LEFT JOIN orders o
@@ -364,12 +380,11 @@ LEFT JOIN orders o
 
 
 
-SELECT *
-FROM orders;
-SELECT *
-FROM shippers;
-SELECT *
-FROM order_statuses;
+-- ordenes con nombre de cliente, nombre de shipper y el status del shipment
+
+SELECT * FROM orders;
+SELECT * FROM shippers;
+SELECT * FROM order_statuses;
 
 SELECT o.order_date, o.order_id, c.first_name, s.name, os.name
 FROM orders o
@@ -386,24 +401,3 @@ JOIN order_statuses os -- join o left-join xq todas las ordenes tienen status
 
 
 -- 				25
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
