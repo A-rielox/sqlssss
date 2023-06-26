@@ -9,7 +9,9 @@
 	ROLLBACK - To Undo
 */
 
-SELECT * FROM Lecturers
+USE SchoolManagementDb;
+
+SELECT * FROM Lecturers;
 
 BEGIN TRANSACTION
 	DELETE FROM Lecturers WHERE StaffId = '1478836973'

@@ -1,7 +1,14 @@
-CREATE DATABASE SchoolManagementDb222
+
+CREATE DATABASE SchoolManagementDb;
 GO
 
-USE SchoolManagementDb222
+
+--			p' cambiar el nombre
+-- tambien me cambia el nombre del archivo
+-- alter database SchoolManagementDb modify name = ScoolDb
+
+
+USE SchoolManagementDb;
 
 CREATE TABLE Students(
 	Id INT PRIMARY KEY NOT NULL IDENTITY(1,1),
@@ -30,4 +37,4 @@ CREATE TABLE Courses(
 );
 
 -- USE master
--- DROP DATABASE SchoolManagementDb222;
+-- DROP DATABASE SchoolManagementDb;

@@ -1,13 +1,18 @@
+
+USE SchoolManagementDb;
+
 SELECT * FROM Lecturers;
 
-SELECT FirstName, LastName, StaffId 
-	FROM Lecturers
+SELECT FirstName, 
+       LastName, 
+       StaffId
+FROM Lecturers;
 
 
-SELECT	FirstName as 'First Name',
-		LastName as 'Last Name',
-		StaffId as 'Staff Id'
-FROM Lecturers
+SELECT FirstName AS 'First Name', 
+       LastName AS 'Last Name', 
+       StaffId AS 'Staff Id'
+FROM Lecturers;
 
 
 --					  FILTER

@@ -103,7 +103,7 @@ WHERE
 USE sql_invoicing;
 
 SELECT * FROM invoices;
--- los client_id se repiten xc/invoice de un mismo cliente
+-- los client_id se repiten xc/invoice de un mismo cliente, sacar las ventas totales de c/client p' la segunda mitad del 2019
 -- p' filtrar, primero WHERE y despues GROUP BY
 
 SELECT 
@@ -152,7 +152,7 @@ SELECT * FROM payments; SELECT * FROM payment_methods;
 
 SELECT 
     p.date, pm.name AS payment_method, SUM(p.amount) AS total_payment
-FROM
+FROM 
     payments p
 JOIN
     payment_methods pm 
@@ -172,6 +172,7 @@ ORDER BY p.date ASC;
 
 
 -- total de ventas p' c/cliente
+
 SELECT 
     client_id,
     SUM(invoice_total) AS total_sales,
@@ -483,8 +484,6 @@ WHERE client_id = ANY (
 -- SEELCT EMPLOYEES WHOSE SALARY IS ABOVE THE AVERAGE IN THEIR OFFICE
 USE sql_hr;
 
-
-
 -- este es el avg en c/office, pero no me sirve de esta forma
 SELECT office_id, AVG(salary)
 FROM employees
@@ -499,6 +498,7 @@ WHERE salary > (
     FROM employees
     WHERE office_id = e.office_id
 );
+
 
 
 
@@ -565,6 +565,12 @@ WHERE EXISTS (
     FROM invoices
     WHERE client_id = c.client_id
 );
+
+
+
+
+
+
 
 
 -- find the products that have never been ordered in sql_store

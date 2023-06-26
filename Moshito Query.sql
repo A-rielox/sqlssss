@@ -123,7 +123,7 @@ WHERE last_name REGEXP 'y$';
 
 
 -- p'q tengan uno u otro patron |
-
+USE sql_store;
 -- q tengan "field" o "mac" o "rose" en el apellido
 SELECT *
 FROM customers
