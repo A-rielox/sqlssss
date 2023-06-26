@@ -36,5 +36,14 @@ CREATE TABLE Courses(
 	Credits INT,
 );
 
+-- un courses es como matematicas y las classes es con quien da cada curso
+--CREATE TABLE Classes (
+--	Id INT PRIMARY KEY IDENTITY,
+--	LecturerId INT FOREIGN KEY REFERENCES Lecturers(Id),
+--	CourseId INT FOREIGN KEY REFERENCES Courses(Id),
+--	[Time] TIME
+--)
+
+
 -- USE master
 -- DROP DATABASE SchoolManagementDb;
