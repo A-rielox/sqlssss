@@ -16,7 +16,7 @@ CREATE TABLE Students(
 	LastName NVARCHAR(50) NOT NULL,
 	DateOfBirth DATE,
 	StudentId NVARCHAR(10) UNIQUE,
-	ProgrammeOfStudy NVARCHAR(150) NOT NULL,
+	ProgrammeOfStudy NVARCHAR(150),
 );
 
 CREATE TABLE Lecturers(
