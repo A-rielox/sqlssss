@@ -43,7 +43,7 @@ INSERT INTO Classes VALUES
 SELECT * FROM Classes;
 
 
-
+SELECT * FROM Courses;
 SELECT * FROM classes;
 SELECT * FROM students;
 SELECT * FROM Enrollments;
