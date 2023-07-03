@@ -1,13 +1,4 @@
 -- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
 -- ================================================
 SET ANSI_NULLS ON
 GO
@@ -18,6 +9,9 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
+
+DROP PROCEDURE IF EXISTS dbo.sp_SelectAllStudents;
+
 CREATE PROCEDURE sp_SelectAllStudents
 	-- Add the parameters for the stored procedure here
 	--<@Param1, sysname, @p1> <Datatype_For_Param1, , int> = <Default_Value_For_Param1, , 0>, 
