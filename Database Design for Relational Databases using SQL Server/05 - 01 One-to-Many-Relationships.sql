@@ -146,7 +146,7 @@ WHERE DEPARTMENT_ID IS NULL;
 
 --Altering the EMPLOYEES table to ensure that the DEPARTMENT_ID column has a NOT NULL constraint added to it:
 
-ALTER TABLE EMPLOYEES 
+ALTER TABLE EMPLOYEES ---------------------------------------------------------- ****
   ALTER COLUMN DEPARTMENT_ID INT NOT NULL;
 
 
