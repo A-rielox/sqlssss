@@ -199,3 +199,24 @@ FROM orders;
 
 
 
+
+
+
+--				CASE - WHEN
+
+
+USE sql_store;
+GO
+
+
+SELECT	order_id,
+		CASE
+			WHEN YEAR(order_date) = '2019' THEN 'Active'
+			WHEN YEAR(order_date) = '2019' - 1 THEN 'Last year'
+			WHEN YEAR(order_date) < '2019' - 1 THEN 'Archived'
+			ELSE 'Future'
+		END AS Category
+FROM orders
+;
+
+
