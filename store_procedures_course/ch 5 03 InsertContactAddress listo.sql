@@ -6,11 +6,11 @@ GO
 
 CREATE PROCEDURE dbo.InsertContactAddress
 (
- @ContactId		INT,
- @HouseNumber	VARCHAR(200),
- @Street		VARCHAR(200),
- @City			VARCHAR(200),
- @Postcode		VARCHAR(20)
+	 @ContactId		INT,
+	 @HouseNumber	VARCHAR(200),
+	 @Street		VARCHAR(200),
+	 @City			VARCHAR(200),
+	 @Postcode		VARCHAR(20)
 )
 AS
 BEGIN;

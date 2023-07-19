@@ -8,8 +8,8 @@ GO
 
 CREATE PROCEDURE dbo.InsertContactRole
 (
- @ContactId	INT,
- @RoleTitle	VARCHAR(200)
+	 @ContactId	INT,
+	 @RoleTitle	VARCHAR(200)
 )
 AS
 BEGIN;

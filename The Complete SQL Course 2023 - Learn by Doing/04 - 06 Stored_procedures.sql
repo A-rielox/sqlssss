@@ -1,3 +1,4 @@
+
 USE SAMPLEDB
 GO
 
@@ -8,7 +9,7 @@ SELECT
 	e.first_name,
 	e.last_name,
 	d.department_name 
-	FROM hcm.employees e INNER JOIN hcm.departments d
+FROM hcm.employees e INNER JOIN hcm.departments d
 ON e.department_id = d.department_id
 WHERE d.department_name = 'Finance';
 
@@ -62,7 +63,7 @@ GO
 
 CREATE PROCEDURE oes.searchCustomersByStreetAddress
 (
-@street_address_search VARCHAR(50)
+	@street_address_search VARCHAR(50)
 )
 AS
 SELECT 
@@ -91,10 +92,10 @@ SELECT
 	cu.email,
 	ct.country_name
 FROM oes.customers cu
-INNER JOIN hcm.countries ct
+	INNER JOIN hcm.countries ct
 ON cu.country_id = ct.country_id
 WHERE ct.country_name = 'Australia'
-AND cu.email LIKE '%gmail.com';
+	AND cu.email LIKE '%gmail.com';
 
 
 -- We can put the value for the country name in a input parameter as well as the search string value for email domain
@@ -117,10 +118,10 @@ BEGIN
 		cu.email,
 		ct.country_name
 	FROM oes.customers cu
-	INNER JOIN hcm.countries ct
+		INNER JOIN hcm.countries ct
 	ON cu.country_id = ct.country_id
 	WHERE ct.country_name = @country
-	AND cu.email LIKE '%' + @email_domain;
+		AND cu.email LIKE '%' + @email_domain;
 END
 
 GO
@@ -141,7 +142,7 @@ SELECT
 	salary
 FROM hcm.employees 
 WHERE salary >= 80000
-AND salary <= 100000;
+	AND salary <= 100000;
 
 GO
 
@@ -160,7 +161,7 @@ SELECT
 	salary
 FROM hcm.employees 
 WHERE salary >= @min_salary
-AND salary <= @max_salary;
+	AND salary <= @max_salary;
 
 GO
 
@@ -196,7 +197,7 @@ SELECT
 	salary
 FROM hcm.employees 
 WHERE salary >= @min_salary
-AND salary <= @max_salary;
+	AND salary <= @max_salary;
 
 GO
 
@@ -223,12 +224,12 @@ from dbo.parks2
 -- Create table called parks2:
 
 CREATE TABLE dbo.parks2 
-	(
+(
 	park_id INT IDENTITY(1,1),
 	park_name VARCHAR(50) NOT NULL,
 	entry_fee DECIMAL(6,2) NOT NULL,
 	CONSTRAINT PK_parks2_park_id PRIMARY KEY (park_id)
-	);
+);
 
 
 -- Populate parks2 table with some data:

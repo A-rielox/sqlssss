@@ -1,3 +1,4 @@
+
 USE SAMPLEDB
 GO
 
@@ -16,8 +17,8 @@ SET @new_product_id = SCOPE_IDENTITY();
 
 -- Insert the inventory information for the new product:
 INSERT INTO oes.inventories (product_id, warehouse_id, quantity_on_hand)
- VALUES (@new_product_id, 1, 100),
-        (@new_product_id, 4, 35);
+	VALUES	(@new_product_id, 1, 100),
+			(@new_product_id, 4, 35);
 
 -- Commit the changes. The commit will only happen if all statements within the transaction are successful:
 COMMIT TRANSACTION;

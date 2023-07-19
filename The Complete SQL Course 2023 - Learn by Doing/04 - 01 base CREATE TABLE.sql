@@ -1,13 +1,14 @@
+
 USE SAMPLEDB
 GO
 
 -- Create table called parks1:
 CREATE TABLE parks1 
-	(
+(
 	park_id INT,
 	park_name VARCHAR(50),
 	entry_fee DECIMAL(6,2)
-	);
+);
 
 
 --selecting from the parks1 table:
@@ -33,12 +34,12 @@ FROM dbo.parks1;
 
 -- Create table called parks2:
 CREATE TABLE dbo.parks2 
-	(
+(
 	park_id INT IDENTITY(1,1),
 	park_name VARCHAR(50) NOT NULL,
 	entry_fee DECIMAL(6,2) NOT NULL,
 	CONSTRAINT PK_parks2_park_id PRIMARY KEY (park_id)
-	);
+);
 
 
 -- Populate parks2 table with some data:
@@ -59,7 +60,7 @@ FROM dbo.parks2;
 
 -- create child table called park_visits:
 CREATE TABLE dbo.park_visits 
-	(
+(
 	visit_id INT IDENTITY,
 	park_id INT NOT NULL,
 	visit_date DATE NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE dbo.park_visits
 	last_name  NVARCHAR(50) NOT NULL,
 	CONSTRAINT PK_park_visits_visit_id PRIMARY KEY (visit_id),
 	CONSTRAINT FK_park_visits_park_id FOREIGN KEY (park_id) REFERENCES parks2 (park_id)
-	);
+);
 
 
 -- insert some rows into the park_visits table:
