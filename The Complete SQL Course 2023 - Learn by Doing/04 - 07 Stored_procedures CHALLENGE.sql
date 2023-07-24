@@ -62,6 +62,7 @@ WHERE	discontinued = 0 AND
 
 --			sp
 GO
+
 CREATE PROCEDURE  oes.getCurrentProducts
 (
 	@product_name  VARCHAR(100),
@@ -93,7 +94,8 @@ EXEC oes.getCurrentProducts @product_name = 'DRONE', @max_list_price = 700;
 -- - @deposit_account_id of data type INT
 -- - @transfer_amount of data type DECIMAL(30,2)
 
--- Test the stored procedure by transferring $100 from Anna’s bank account to Bob’s account.
+-- Test the stored procedure by transferring $100 from Anna’s bank account to Bob’s account.
+
 
 
 SELECT * FROM oes.bank_accounts; -- A33, B25

@@ -265,13 +265,13 @@ SET XACT_ABORT ON;
 
 BEGIN
 
-INSERT INTO dbo.parks2 (park_name, entry_fee)
-	VALUES (@park_name, @entry_fee);
+	INSERT INTO dbo.parks2 (park_name, entry_fee)
+		VALUES (@park_name, @entry_fee);
 
 
--- Setting the @new_park_id output parameter to the value returned by the SCOPE_IDENTITY function.
--- SCOPE_IDENTITY() returns the IDENTITY value of the last insert that occurred in the same scope:
-SELECT @new_park_id = SCOPE_IDENTITY();
+	-- Setting the @new_park_id output parameter to the value returned by the SCOPE_IDENTITY function.
+	-- SCOPE_IDENTITY() returns the IDENTITY value of the last insert that occurred in the same scope:
+	SELECT @new_park_id = SCOPE_IDENTITY();
 
 END
 

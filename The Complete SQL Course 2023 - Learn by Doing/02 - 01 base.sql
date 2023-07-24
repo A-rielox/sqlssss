@@ -61,7 +61,8 @@ SELECT GETDATE() AS get_date_value; -- viene del sistema operativo
 SELECT CONVERT(DATE, GETDATE()) AS get_date_value;
 
 -- son ='s ( CURRENT_TIMESTAMP sirve p' cualquier sql )
-SELECT GETDATE() AS get_date_value, CURRENT_TIMESTAMP AS current_timestamp_value;
+SELECT	GETDATE() AS get_date_value, 
+		CURRENT_TIMESTAMP AS current_timestamp_value;
 
 
 SELECT SYSDATETIME() AS sysdatetime_value; -- el mismo pero + preciso
