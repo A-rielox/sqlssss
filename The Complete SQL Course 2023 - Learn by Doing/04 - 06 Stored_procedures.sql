@@ -92,10 +92,10 @@ SELECT
 	cu.email,
 	ct.country_name
 FROM oes.customers cu
-	INNER JOIN hcm.countries ct
-ON cu.country_id = ct.country_id
-WHERE ct.country_name = 'Australia'
-	AND cu.email LIKE '%gmail.com';
+INNER JOIN hcm.countries ct
+	ON cu.country_id = ct.country_id
+WHERE	ct.country_name = 'Australia'
+		AND cu.email LIKE '%gmail.com';
 
 
 -- We can put the value for the country name in a input parameter as well as the search string value for email domain
@@ -118,10 +118,10 @@ BEGIN
 		cu.email,
 		ct.country_name
 	FROM oes.customers cu
-		INNER JOIN hcm.countries ct
-	ON cu.country_id = ct.country_id
-	WHERE ct.country_name = @country
-		AND cu.email LIKE '%' + @email_domain;
+	INNER JOIN hcm.countries ct
+		ON cu.country_id = ct.country_id
+	WHERE	ct.country_name = @country
+			AND cu.email LIKE '%' + @email_domain;
 END
 
 GO
@@ -141,8 +141,8 @@ SELECT
 	department_id,
 	salary
 FROM hcm.employees 
-WHERE salary >= 80000
-	AND salary <= 100000;
+WHERE	salary >= 80000
+		AND salary <= 100000;
 
 GO
 
@@ -160,8 +160,8 @@ SELECT
 	department_id,
 	salary
 FROM hcm.employees 
-WHERE salary >= @min_salary
-	AND salary <= @max_salary;
+WHERE	salary >= @min_salary
+		AND salary <= @max_salary;
 
 GO
 

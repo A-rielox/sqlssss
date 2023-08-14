@@ -105,4 +105,3 @@ of the park_visits table must match an existing value in park_id of parks2 table
 DROP TABLE dbo.park_visits;
 DROP TABLE dbo.parks1;
 DROP TABLE dbo.parks2;
-

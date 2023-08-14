@@ -8,7 +8,7 @@ SELECT NEWID() AS guid_value;
 GO
 -- A722ECD3-AEC1-4511-81D6-9249F65675C8
 ---------------
-CREATE TABLE dbo.subjects1 
+CREATE TABLE dbo.subjects1
 (
 	subject_id INT IDENTITY,
 	subject_name VARCHAR(20),

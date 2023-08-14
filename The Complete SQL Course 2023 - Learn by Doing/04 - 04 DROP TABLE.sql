@@ -20,6 +20,19 @@ drop the foreign key constraint on the child table that is
 referencing the parent table dbo.dept
 */
 
+/*
+CREATE TABLE dbo.emp 
+(
+	emp_id INT IDENTITY, 
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	hire_date DATE NOT NULL,
+	dept_id INT,
+	CONSTRAINT PK_emp_emp_id PRIMARY KEY (emp_id),
+	CONSTRAINT fk_emp_dept_id FOREIGN KEY (dept_id) REFERENCES dbo.dept (dept_id)
+);
+*/
+
 ALTER TABLE dbo.emp
 DROP CONSTRAINT fk_emp_dept_id;
 GO

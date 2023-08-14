@@ -30,6 +30,28 @@ ALTER COLUMN product_name VARCHAR(50) NOT NULL;
 -- si ya tiene nulls primero voy a tener q remover los null q ya existan
 
 
+/*
+
+-- Create table oes.products
+CREATE TABLE oes.products 
+(
+  product_id INT NOT NULL IDENTITY,
+  product_name VARCHAR(100) NOT NULL,
+  category_id INT NOT NULL,
+  list_price NUMERIC(19,4) NOT NULL CONSTRAINT dft_products_list_price DEFAULT(0),
+  discontinued BIT NOT NULL CONSTRAINT dft_products_discontinued DEFAULT(0),
+  CONSTRAINT pk_products_product_id PRIMARY KEY (product_id),
+  CONSTRAINT fk_products_product_categories FOREIGN KEY (category_id)
+    REFERENCES oes.product_categories (category_id),
+  CONSTRAINT chk_products_list_price CHECK(list_price >= 0)
+);
+
+CREATE INDEX ix_products_category_id ON oes.products(category_id);
+
+
+
+*/
+
 
 
 --	drop a column

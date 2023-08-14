@@ -16,7 +16,8 @@ INSERT INTO dbo.dept (dept_name) VALUES ('Business Intelligence');
 
 INSERT INTO dbo.dept (dept_name)
 	SELECT department_name
-	FROM hcm.departments;
+	FROM hcm.departments
+;
 
 
 

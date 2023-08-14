@@ -242,18 +242,3 @@ WHERE NOT EXISTS (
 	SELECT * FROM hcm.employees e
 	WHERE e.department_id = d.department_id
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
