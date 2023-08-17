@@ -17,15 +17,25 @@ BEGIN
 
 	SELECT *
 	FROM dbo.Users
-	WHERE userName = @userName
-;
+	WHERE userName = @userName;
+
+	DECLARE @userID INT;
+	SET @userID = (
+					SELECT id
+					FROM dbo.Users
+					WHERE userName = @userName
+				  );
+
+	SELECT *
+	FROM dbo.Photos
+	WHERE appUserId = @userID;
 
 END
 GO
 
 
 
-EXEC dbo.sp_getUserByUserName @userName = 'bob';
+EXEC dbo.sp_getUserByUserName @userName = 'LISA';
 
 
 

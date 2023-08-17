@@ -21,7 +21,9 @@ FROM Photos;
 
 
 INSERT INTO [dbo].[Photos] (url, isMain, appUserId)
-VALUES	('https://randomuser.me/api/portraits/women/54.jpg', 1, 1),
+VALUES	('https://randomuser.me/api/portraits/women/54.jpg', 0, 1),
+		('https://randomuser.me/api/portraits/women/70.jpg', 1, 1), -- 2da p' lisa, main photo
+		('https://randomuser.me/api/portraits/women/21.jpg', 0, 1), -- 3da p' lisa
 		('https://randomuser.me/api/portraits/women/50.jpg', 1, 2),
 		('https://randomuser.me/api/portraits/women/14.jpg', 1, 3),
 		('https://randomuser.me/api/portraits/women/11.jpg', 1, 4),
