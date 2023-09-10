@@ -1,7 +1,7 @@
-USE DatingAppSqlS;
+USE DatingSql;
 GO
 
-DROP TABLE IF EXISTS DatingAppSqlS.dbo.Photos;
+DROP TABLE IF EXISTS DatingSql.dbo.Photos;
 GO
 
 CREATE TABLE Photos
@@ -39,6 +39,6 @@ SELECT *
 FROM Photos;
 
 
-TRUNCATE TABLE DatingAppSqlS.dbo.Photos;
+--TRUNCATE TABLE DatingAppSqlS.dbo.Photos;
 
 

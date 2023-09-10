@@ -1,4 +1,4 @@
-USE DatingAppSqlS;
+USE DatingSql;
 GO
 
 DROP PROCEDURE IF EXISTS dbo.sp_getUserByUserName;
@@ -35,7 +35,7 @@ GO
 
 
 
-EXEC dbo.sp_getUserByUserName @userName = 'LISA';
+EXEC dbo.sp_getUserByUserName @userName = 'todd';
 
 
 

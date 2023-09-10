@@ -1,4 +1,4 @@
-USE DatingAppSqlS;
+USE DatingSql;
 GO
 
 DROP PROCEDURE IF EXISTS dbo.sp_getAllUsersAndPhotos

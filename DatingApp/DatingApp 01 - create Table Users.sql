@@ -1,7 +1,7 @@
-USE DatingAppSqlS;
+USE DatingSql;
 GO
 
-DROP TABLE IF EXISTS DatingAppSqlS.dbo.Users;
+DROP TABLE IF EXISTS DatingSql.dbo.Users;
 
 
 CREATE TABLE Users
@@ -48,6 +48,6 @@ SELECT *
 FROM Users;
 
 
-TRUNCATE TABLE DatingAppSqlS.dbo.Users;
+--TRUNCATE TABLE DatingAppSqlS.dbo.Users;
 
 

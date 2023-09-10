@@ -1,4 +1,4 @@
-USE DatingAppSqlS;
+USE DatingSql;
 GO
 
 DROP PROCEDURE IF EXISTS dbo.sp_getUserById;
@@ -25,7 +25,7 @@ GO
 
 
 
-EXEC dbo.sp_getUserById @userId = 2;
+EXEC dbo.sp_getUserById @userId = 12;
 
 
 
