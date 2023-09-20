@@ -12,7 +12,8 @@ CREATE PROCEDURE dbo.sp_updateUser
     @lookingFor VARCHAR(2500),
     @interests VARCHAR(2500),
     @city VARCHAR(200),
-    @country VARCHAR(200)
+    @country VARCHAR(200),
+	@lastActive DATETIME
 )
 AS
 
@@ -26,10 +27,11 @@ BEGIN
 		lookingFor = @lookingFor,
 		interests = @interests,
 		city = @city,
-		country = @country
+		country = @country,
+		lastActive = @lastActive
 	WHERE id = @userId
 
-	SELECT @@ROWCOUNT; -- me devuelve el usuario editado
+	SELECT @@ROWCOUNT; 
 ;
 
 END
@@ -46,7 +48,8 @@ EXEC dbo.sp_updateUser	@userId = 12,
 						@lookingFor = 'Looking For Editados1',
 						@interests = 'Interests Editados',
 						@city = 'Ciudad Editada',
-						@country = 'Pais Editado';
+						@country = 'Pais Editado',
+						@lastActive = '2023-09-19';
 
 SELECT * FROM [DatingSql].[dbo].[Users] WHERE id = 12;
 
