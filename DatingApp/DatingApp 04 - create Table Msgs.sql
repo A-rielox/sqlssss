@@ -1,10 +1,10 @@
 USE DatingSql;
 GO
 
-DROP TABLE IF EXISTS DatingSql.dbo.Messages;
+DROP TABLE IF EXISTS DatingSql.dbo.Msgs;
 
 
-CREATE TABLE Messages
+CREATE TABLE Msgs
 (
 	id INT IDENTITY(1,1),
 
@@ -25,17 +25,17 @@ CREATE TABLE Messages
 	CONSTRAINT FK_Messages_RecipientId FOREIGN KEY (RecipientId) REFERENCES Users (id)
 );
 
-SELECT * FROM Messages;
+SELECT * FROM Msgs;
 SELECT * FROM Users;
 
-INSERT INTO [dbo].[Messages] (SenderId, SenderUsername, RecipientId, RecipientUsername, Content)
+INSERT INTO [dbo].[Msgs] (SenderId, SenderUsername, RecipientId, RecipientUsername, Content)
 VALUES	(1, 'Lisa', 6, 'Todd', 'Mensaje 1 Lisa a Todd'),
 		(6, 'Todd', 1, 'Lisa',  'Mensaje 2 Todd a  Lisa')
 ;
 
-SELECT * FROM Messages;
+SELECT * FROM Msgs;
 
---TRUNCATE TABLE DatingSql.dbo.Messages;
+--TRUNCATE TABLE DatingSql.dbo.Msgs;
 
 
 
