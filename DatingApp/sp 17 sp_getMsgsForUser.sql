@@ -97,6 +97,6 @@ EXEC dbo.sp_getMsgsForUser	@username = 'Lisa',
 							@container = 'Unread'
 ;
 
---SELECT * FROM Msgs;
+SELECT * FROM Msgs;
 SELECT * FROM Photos
 WHERE appUserId IN (1, 6);

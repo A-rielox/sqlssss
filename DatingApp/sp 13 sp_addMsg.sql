@@ -45,11 +45,11 @@ GO
 
 
 
-EXEC [dbo].[sp_addMsg]	@senderId = 2,
-						@senderUsername = 'Karen',
-						@recipientId = 7,
-						@recipientUsername = 'Porter',
-						@content = 'Mensaje desde sp Karen a Porter'
+EXEC [dbo].[sp_addMsg]	@senderId = 6,
+						@senderUsername = 'Todd',
+						@recipientId = 2,
+						@recipientUsername = 'Karen',
+						@content = 'Mensaje desde sp Todd a Karen'
 ;
 
 SELECT * FROM [Msgs];
