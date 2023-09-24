@@ -74,6 +74,20 @@ BEGIN
 	)
 	AND isMain = 1;
 
+	-- actualizando mensajes no leidos
+	-- el username es de quien esta logeado y quiere ver sus mensajes
+	IF @container = 'Unread'
+		BEGIN
+			UPDATE dbo.Msgs
+			SET DateRead = GETDATE()
+			WHERE	id IN (
+						SELECT msgId FROM @msgsIds
+					) AND
+					DateRead IS NULL AND 
+					RecipientUsername = @username;
+		END
+
+
 	-- los mensajes
 	SELECT * 
 	FROM Msgs
