@@ -39,7 +39,7 @@ BEGIN
 			SELECT id
 			FROM Msgs
 			WHERE	SenderUsername = @username AND
-					RecipientDeleted = 0
+					SenderDeleted = 0
 		END
 	IF @container = 'Unread'			-- los no leidos
 		BEGIN

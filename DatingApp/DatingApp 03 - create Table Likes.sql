@@ -18,9 +18,9 @@ SELECT * FROM Likes;
 SELECT * FROM Users;
 
 INSERT INTO [dbo].[Likes] (SourceUserId, TargetUserId)
-VALUES	(1, 2),
-		(2, 1),
-		(3, 2)
+VALUES	(2, 3),
+		(3, 2),
+		(4, 3)
 ;
 
 SELECT * 

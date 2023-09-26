@@ -26,7 +26,7 @@ BEGIN
 
 			SET @RowCount = @@ROWCOUNT;
 		END
-		ELSE
+	ELSE
 		BEGIN
 			UPDATE dbo.Msgs
 			SET RecipientDeleted = 1
@@ -70,8 +70,9 @@ WHERE id = 6;
 EXEC dbo.sp_deleteMsg	@msgId = 6,
 						@userNameDeleting = 'Karen'
 ;
+
 SELECT * FROM [Msgs]
-WHERE id = 6;
+WHERE SenderUsername like 'lisa';
 
 /*
 USE DatingSql;

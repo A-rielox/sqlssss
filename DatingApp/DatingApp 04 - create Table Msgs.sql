@@ -26,18 +26,18 @@ CREATE TABLE Msgs
 );
 
 SELECT * FROM Msgs;
-SELECT * FROM Users;
+--SELECT * FROM Users;
 
 INSERT INTO [dbo].[Msgs] (SenderId, SenderUsername, RecipientId, RecipientUsername, Content)
-VALUES	(1, 'Lisa', 6, 'Todd', 'Mensaje 1 Lisa a Todd'),
-		(6, 'Todd', 1, 'Lisa',  'Mensaje 2 Todd a  Lisa'),
-		(1,	'Lisa', 6,	'Todd',	'Mensaje desde sp'),
-		(1,	'Lisa',	6,	'Todd', 'Test message from Lisa to Todd postman'),
-		(6,	'Todd',	1,	'Lisa', 'Test message from Todd to Lisa from postman'),
-		(1,	'Lisa',	6,	'Todd', 'Test message from Lisa to Todd postman ultimo'),
-		(2,	'Karen', 7, 'Porter', 'Mensaje desde sp Karen a Porter'),
-		(7,	'Porter', 2, 'Karen', 'Mensaje desde sp Porter a Karen'),
-		(6,	'Todd',	2, 'Karen', 'Mensaje desde sp Todd a Karen')
+VALUES	(2, 'Lisa', 7, 'Todd', 'Mensaje 1 Lisa a Todd'),
+		(7, 'Todd', 2, 'Lisa',  'Mensaje 2 Todd a  Lisa'),
+		(2,	'Lisa', 7,	'Todd',	'Mensaje desde XD'),
+		(2,	'Lisa',	7,	'Todd', 'Test message from Lisa to Todd'),
+		(7,	'Todd',	2,	'Lisa', 'Test message from Todd to Lisa'),
+		(2,	'Lisa',	7,	'Todd', 'Test message from Lisa to Todd'),
+		(3,	'Karen', 8, 'Porter', 'Mensaje Karen a Porter'),
+		(8,	'Porter', 3, 'Karen', 'Mensaje Porter a Karen'),
+		(7,	'Todd',	3, 'Karen', 'Mensaje Todd a Karen')
 ;
 
 SELECT * FROM Msgs;
