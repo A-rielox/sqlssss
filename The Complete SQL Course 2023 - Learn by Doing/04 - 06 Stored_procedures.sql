@@ -17,7 +17,10 @@ WHERE d.department_name = 'Finance';
 GO
 
 -- Stored procedure with one input parameter:
-CREATE PROCEDURE hcm.getEmployeesByDepartment (@department_name VARCHAR(50))
+CREATE PROCEDURE hcm.getEmployeesByDepartment 
+(
+	@department_name VARCHAR(50)
+)
 AS
 SELECT 
 	e.employee_id,
@@ -174,7 +177,8 @@ GO
 -------------------------------------
 -------------------------------------
 /*
--- optional parameters:
+--										OPTIONAL PARAMETERS:
+
 We can specify default values for parameters. In alter procedure below,
 @min_salary is set to a default value of 0 and @max_salary is set to a default value of 99999999.
 Therefore, when you execute the stored procedure you have the option to skip the parameters 
@@ -216,7 +220,7 @@ EXEC hcm.getEmployeesBySalaryRange @max_salary = 150000;
 
 -------------------------------------
 -------------------------------------
--- Output parameters:
+--									OUTPUT PARAMETERS:
 /*
 select *
 from dbo.parks2
@@ -266,7 +270,7 @@ SET XACT_ABORT ON;
 BEGIN
 
 	INSERT INTO dbo.parks2 (park_name, entry_fee)
-		VALUES (@park_name, @entry_fee);
+	VALUES (@park_name, @entry_fee);
 
 
 	-- Setting the @new_park_id output parameter to the value returned by the SCOPE_IDENTITY function.
@@ -288,7 +292,9 @@ declare a variable to store the value returned by the output parameter:
 DECLARE @ParkID INT;
  
 -- Execute the stored procedure to add the 'Green Meadows' park.
-EXEC dbo.addNewPark @park_name = 'Green Meadows', @entry_fee = 5, @new_park_id = @ParkID OUT;
+EXEC dbo.addNewPark @park_name = 'Green Meadows', 
+					@entry_fee = 5, 
+					@new_park_id = @ParkID OUT;
  
 SELECT @ParkID;
 

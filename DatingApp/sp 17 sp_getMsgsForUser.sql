@@ -106,7 +106,7 @@ END
 GO
 
 
---	'Inbox'		'Outbox'	''
+--	'Inbox'		'Outbox'	'Unread'
 EXEC dbo.sp_getMsgsForUser	@username = 'Lisa',
 							@container = 'Unread'
 ;
