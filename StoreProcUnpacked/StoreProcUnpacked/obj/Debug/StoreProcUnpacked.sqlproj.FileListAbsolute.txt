@@ -2,9 +2,5 @@ D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\bin\Debug\StoreProcUnpacked.da
 D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\bin\Debug\StoreProcUnpacked.dll
 D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\bin\Debug\StoreProcUnpacked.pdb
 D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\StoreProcUnpacked.sqlproj.AssemblyReference.cache
-D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\Model.xml
-D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\refactor.xml
-D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\postdeploy.sql
-D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\predeploy.sql
 D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\StoreProcUnpacked.dll
 D:\Tuts\SQL's\StoreProcUnpacked\StoreProcUnpacked\obj\Debug\StoreProcUnpacked.pdb

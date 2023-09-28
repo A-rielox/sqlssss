@@ -42,11 +42,11 @@ CREATE PROC dbo.WeekCreate
 AS
 BEGIN
 	--Setup Variables 
-	DECLARE @myTable TABLE(WeekNumber int, 
-						   DateStarting smalldatetime) 
+	DECLARE @myTable TABLE(WeekNumber INT, 
+						   DateStarting SMALLDATETIME) 
 	 
-	DECLARE @n int = 0 
-	DECLARE @firstWeek smalldatetime = '12/31/2017' 
+	DECLARE @n INT = 0 
+	DECLARE @firstWeek SMALLDATETIME = '12/31/2017' 
 	 
 	--Loop Through weeks 
 	WHILE @n <= 52 
