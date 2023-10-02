@@ -85,6 +85,7 @@ GO
 CREATE PROC dbo.WeekCreateWithBreak
 AS
 BEGIN
+
 	--Setup Variables 
 	DECLARE @myTable TABLE(WeekNumber int, 
 						   DateStarting smalldatetime) 
@@ -104,6 +105,7 @@ BEGIN
 	--Show Results 
 	SELECT WeekNumber, DateStarting 
 	FROM   @myTable
+
 END
 
 

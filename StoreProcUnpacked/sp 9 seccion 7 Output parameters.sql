@@ -45,11 +45,10 @@ GO
 DROP PROCEDURE IF EXISTS dbo.uspFullName
 GO
 
-CREATE PROCEDURE uspFullName
-					@first NVARCHAR(40),
-					@last NVARCHAR(40),
-					@full NVARCHAR(80) OUTPUT,
-					@initials NVARCHAR(4) OUTPUT
+CREATE PROCEDURE uspFullName	@first NVARCHAR(40),
+								@last NVARCHAR(40),
+								@full NVARCHAR(80) OUTPUT,
+								@initials NVARCHAR(4) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
