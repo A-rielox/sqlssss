@@ -25,6 +25,7 @@ GO
 
 
 
-EXEC dbo.sp_getUserRolesName @userId = 1;
+EXEC dbo.sp_getUserRolesName @userId = 2;
 
-SELECT * FROM UserRoles;
+SELECT * FROM UserRoles
+WHERE userId = 2;
