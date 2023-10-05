@@ -74,7 +74,7 @@ where userId = 2
 
 select * from Roles
 
-
+select * from UserRoles
 
 
 --DECLARE @rolesStrings NVARCHAR(200) = 'Member,Moderator'
