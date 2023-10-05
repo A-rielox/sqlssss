@@ -6,17 +6,20 @@ GO
 
 CREATE PROCEDURE dbo.sp_editRoles
 (
-	@userName VARCHAR(50),
-	@rolesList dbo.RolesListType READONLY
+	@userName NVARCHAR(50),
+	@rolesList NVARCHAR(500)
 )
 AS
 
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
 
-BEGIN
+BEGIN TRANSACTION;
+
+	DECLARE @RowCount int;
 
 	DECLARE @userId AS INT;
+	DECLARE @rolesTable AS TABLE(userId INT, roleName VARCHAR(20));
 
 	-- id de user enviado
 	SELECT @userId = id
@@ -27,36 +30,65 @@ BEGIN
 	DELETE FROM dbo.UserRoles
 	WHERE userId = @userId;
 
-	-- agrego lista de roles
-	DECLARE @i INT = 1
+	-- lleno tabla con user y sus nuevos roles
+	INSERT INTO @rolesTable (roleName)
+	SELECT * FROM STRING_SPLIT(@rolesList, ',')
 
-	WHILE @i <= ( SELECT COUNT(*) FROM @rolesList )
-	BEGIN
-		INSERT INTO dbo.UserRoles (userId, roleId)
-		SELECT userName, roleName FROM @rolesList;
+	UPDATE @rolesTable
+	SET userId = @userId
 
-		SET @i = @i + 1
-	END
+	-- insert en tabla de roles los nuevos p'el user
+	INSERT INTO dbo.UserRoles
+	SELECT	rt.userId, 
+			r.id 
+	FROM @rolesTable rt
+	LEFT JOIN Roles r ON rt.rolename = r.name
 
+		
+	SET @RowCount = @@ROWCOUNT;
 	
+	IF @RowCount = ( SELECT COUNT(*) FROM @rolesTable )
+		BEGIN
+			-- envio de vuelta los roles actualizados del user
+			SELECT r.name FROM UserRoles ur
+			LEFT JOIN Roles r ON ur.roleId = r.id
+			WHERE userId = @userId;
 
-
-
-END
+			COMMIT TRANSACTION;
+		END		
+	ELSE
+		BEGIN
+			SELECT @RowCount;
+			ROLLBACK TRANSACTION
+		END
 GO
 
 -----------------
-SELECT * FROM Users WHERE id = 2
-SELECT * FROM UserRoles
-WHERE userId = 2
-
-
-DECLARE @tablilla AS dbo.RolesListType;
-INSERT INTO @tablilla VALUES ('Moderator'),('Member')
 
 EXEC dbo.sp_editRoles	@userName = 'Lisa',
-						@rolesList = @tablilla
+						@rolesList = 'Member,Moderator'
 ;
 
-EXEC dbo.sp_getUsersWithRoles	-- @userName = 'nuevo user'
-;
+select * from UserRoles
+where userId = 2
+
+select * from Roles
+
+
+
+
+--DECLARE @rolesStrings NVARCHAR(200) = 'Member,Moderator'
+--DECLARE @rolesTable AS TABLE(userId INT, rolename VARCHAR(20))
+
+
+--INSERT INTO @rolesTable (rolename)
+--SELECT * FROM STRING_SPLIT(@rolesStrings, ',')
+
+--UPDATE @rolesTable
+--SET userId = 2
+
+--select rt.userId, r.id from @rolesTable rt
+--left join Roles r on rt.rolename = r.name
+
+--SELECT * FROM @rolesTable;
+--select * from Roles
