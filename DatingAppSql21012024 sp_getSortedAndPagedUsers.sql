@@ -73,13 +73,13 @@ GO
 
 
 
-EXEC dbo.sp_getSortedAndPagedUsers	@pageNumber = 1,
-									@rowsOfPage = 20,
-									@currentUsername = 'KAREN',
+EXEC dbo.sp_getSortedAndPagedUsers	@pageNumber = 2,
+									@rowsOfPage = 5,
+									@currentUsername = 'lisa',
 									@gender = 'male',
 									@minDob = '1922-09-11',
-									@maxDob = '1978-09-11',
-									@sortingCol ='Created'
+									@maxDob = '2978-09-11',
+									@sortingCol ='lastActive'
 									--@sortType = 'DESC';
 
 SELECT * FROM Photos ORDER BY appUserId;
