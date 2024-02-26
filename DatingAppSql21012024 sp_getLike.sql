@@ -31,6 +31,11 @@ EXEC dbo.sp_getLike @sourceUserId = 3,
 					@targetUserId = 2
 ;
 
-SELECT * FROM Likes;
+
+
+SELECT * FROM [AppUsers];
+SELECT li.*, auS.KnownAs, auT.KnownAs FROM Likes li
+LEFT JOIN AppUsers auS ON li.SourceUserId = auS.Id
+LEFT JOIN AppUsers auT ON li.TargetUserId = auT.Id
 
 --TRUNCATE TABLE DatingAppSqlS.dbo.Users;
