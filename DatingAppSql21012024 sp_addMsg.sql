@@ -45,14 +45,16 @@ GO
 
 
 
-EXEC [dbo].[sp_addMsg]	@senderId = 7,
-						@senderUsername = 'Todd',
-						@recipientId = 3,
-						@recipientUsername = 'Karen',
-						@content = 'Mensaje desde sp Todd a Karen'
+EXEC [dbo].[sp_addMsg]	@senderId = 4,
+						@senderUsername = 'Margo',
+						@recipientId = 9,
+						@recipientUsername = 'Mayo',
+						@content = 'Mensaje sin respuesta'
 ;
 
 SELECT * FROM [Msgs]
 ORDER BY id DESC;
+select * from [AppUsers]
+select * from [Photos]
 
 --TRUNCATE TABLE DatingAppSqlS.dbo.Users;
