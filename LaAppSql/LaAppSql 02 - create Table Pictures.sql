@@ -39,6 +39,6 @@ SELECT *
 FROM Pictures ORDER BY appUserId;
 
 
---TRUNCATE TABLE DatingSql.dbo.Photos;
+--TRUNCATE TABLE LaAppSql.dbo.Pictures;
 
 
