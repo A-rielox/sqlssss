@@ -39,6 +39,12 @@ VALUES	('Admin', 'Admin', '1980-05-01', '1980-05-01', '...', '...', @Hash, 'Admi
 		('Mayo', 'Mayo', '2020-03-14', '2020-05-17', 'Clarence', 'Burkina Faso', @Hash, 'Mayo', 'MAYO'),
 		('Skinner', 'Skinner', '2019-01-28', '2020-06-07', 'Herald', 'Poland', @Hash, 'Skinner', 'SKINNER'),
 		('Davis', 'Davis', '2020-02-25', '2020-06-11', 'Lupton', 'Luxembourg', @Hash, 'Davis', 'DAVIS')
+
+		-- profes
+		, ('Sergio', 'Sergio', '2020-02-25', '2020-06-11', 'Monterrey', 'México', @Hash, 'Sergio', 'SERGIO')
+		, ('Ricardo', 'Ricardo', '2020-02-25', '2020-06-11', 'Santiago', 'México', @Hash, 'Ricardo', 'RICARDO')
+		, ('Samu', 'Samu', '2020-02-25', '2020-06-11', 'Linares', 'México', @Hash, 'Samu', 'SAMU')
+
 ;
 
 SELECT * FROM AppUsers;
