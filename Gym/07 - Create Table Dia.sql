@@ -1,5 +1,8 @@
+USE Gym
+GO
 
 DROP TABLE IF EXISTS dbo.Dia;
+GO
 
 CREATE TABLE Dia
 (

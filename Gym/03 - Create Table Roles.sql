@@ -2,7 +2,7 @@ USE Gym;
 GO
 
 DROP TABLE IF EXISTS dbo.Roles;
-
+GO
 
 CREATE TABLE Roles
 (

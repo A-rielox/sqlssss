@@ -1,5 +1,8 @@
+USE Gym
+GO
 
 DROP TABLE IF EXISTS dbo.Hora;
+GO
 
 CREATE TABLE Hora
 (

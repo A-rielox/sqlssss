@@ -1,5 +1,8 @@
+USE Gym
+GO
 
 DROP TABLE IF EXISTS dbo.Sector;
+GO
 
 CREATE TABLE Sector
 (

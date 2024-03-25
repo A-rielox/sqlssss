@@ -1,15 +1,29 @@
 USE Gym
 GO
 
-DROP TABLE IF EXISTS dbo.Pictures;
+DROP TABLE IF EXISTS dbo.Pictures; --appUserId
+GO
+DROP TABLE IF EXISTS dbo.ClaseHorario; -- claseId, sectoId ,	diaId ,	horaId ,
+GO
+DROP TABLE IF EXISTS dbo.UserRoles; -- userId, roleId
+GO
+DROP TABLE IF EXISTS dbo.UserClase; -- userId, claseId
+GO
+DROP TABLE IF EXISTS dbo.Clase; -- TipoClase, NivelClase
 GO
 
-DROP TABLE IF EXISTS dbo.UserRoles;
+DROP TABLE IF EXISTS dbo.NivelClase;
 GO
-
-DROP TABLE IF EXISTS dbo.UserClase;
+DROP TABLE IF EXISTS dbo.Roles;
 GO
-
+DROP TABLE IF EXISTS dbo.Sector;
+GO
+DROP TABLE IF EXISTS dbo.TipoClase;
+GO
+DROP TABLE IF EXISTS dbo.Hora;
+GO
+DROP TABLE IF EXISTS dbo.Dia;
+GO
 DROP TABLE IF EXISTS dbo.AppUsers;
 GO
 
@@ -54,6 +68,230 @@ VALUES	('Admin', 'Admin', '1980-05-01', '1980-05-01', '...', '...', @Hash, 'Admi
 ;
 GO
 ------------------------------------------
+CREATE TABLE Hora
+(
+	id INT IDENTITY(1,1),
+	nombreHora TINYINT,
+	
+	CONSTRAINT PK_Hora_id PRIMARY KEY (id),
+);
+
+INSERT INTO [dbo].[Hora] (nombreHora)
+VALUES	(8), (9), (10), (11), (12), (13), (14),
+		(15), (16), (17), (18), (19), (20)
+;
+GO
+------------------------------------------
+CREATE TABLE Dia
+(
+	id INT IDENTITY(1,1),
+	nombreDia VARCHAR(1),
+	
+	CONSTRAINT PK_Dia_id PRIMARY KEY (id),
+);
+
+INSERT INTO [dbo].[Dia] (nombreDia)
+VALUES	('L'),
+		('M'),
+		('X'),
+		('J'),
+		('V'),
+		('S')
+;
+GO
+------------------------------------------
+CREATE TABLE TipoClase
+(
+	id INT IDENTITY(1,1),
+	nombreTipoClase VARCHAR(50),
+	
+	CONSTRAINT PK_TipoClase_id PRIMARY KEY (id),
+);
+
+INSERT INTO [dbo].[TipoClase] (nombreTipoClase)
+VALUES	('Salsa'), ('Zumba'), ('Karate'), ('Yoga')
+;
+GO
+------------------------------------------
+CREATE TABLE Sector
+(
+	id INT IDENTITY(1,1),
+	nombreSector VARCHAR(100),
+	
+	CONSTRAINT PK_Sector_id PRIMARY KEY (id),
+);
+
+INSERT INTO [dbo].[Sector] (nombreSector)
+VALUES	('Piso 1 - A'),
+		('Piso 1 - B'),
+		('Piso 2 - A'),
+		('Piso 2 - B'),
+		('Piso 2 - C')
+;
+GO
+------------------------------------------
+CREATE TABLE Roles
+(
+	id INT IDENTITY(1,1),
+	name VARCHAR(20),
+	normalizedName VARCHAR(20),
+	
+	CONSTRAINT PK_Roles_id PRIMARY KEY (id),
+);
+
+INSERT INTO [dbo].[Roles] (name, normalizedName)
+VALUES	('Admin', 'ADMIN'),
+		('Member', 'MEMBER'),
+		('Teacher', 'TEACHER')
+;
+GO
+------------------------------------------
+CREATE TABLE NivelClase
+(
+	id INT IDENTITY(1,1),
+	nombreNivelClase VARCHAR(50),
+	
+	CONSTRAINT PK_NivelClase_id PRIMARY KEY (id),
+);
+
+INSERT INTO [dbo].[NivelClase] (nombreNivelClase)
+VALUES	('Principiante'), ('Intermedio'), ('Avanzado')
+;
+GO
+------------------------------------------
+CREATE TABLE Clase
+(
+	id INT IDENTITY(1,1),
+	nombre VARCHAR(200),
+	tipo INT,
+	nivel INT,
+	
+	CONSTRAINT PK_Clase_id PRIMARY KEY (id),
+	CONSTRAINT FK_Clase_tipo FOREIGN KEY (tipo) REFERENCES [TipoClase] (id),
+	CONSTRAINT FK_Clase_nivel FOREIGN KEY (nivel) REFERENCES [NivelClase] (id),
+);
+
+INSERT INTO [dbo].[Clase] (nombre, tipo, nivel)
+VALUES	('Salsa principiantes', 1, 1),
+		('Salsa intermedio', 1, 2),
+		('Zumba avanzado', 2, 3),
+		('Karate niños principiante', 3, 1),
+		('Karate adultos intermedio', 3, 2),
+		('Karate adultos avanzado', 3, 3),
+		('Yoga adulto mayor intermedio', 4, 2)
+;
+GO
+------------------------------------------
+CREATE TABLE UserClase
+(
+	userId INT NOT NULL,
+	claseId INT NOT NULL,
+	
+	CONSTRAINT PK_UserClase_id PRIMARY KEY (userId, claseId), -- no puede un alumno o profe estar + de 1 vez en 1 clase
+	CONSTRAINT FK_UserClase_userId FOREIGN KEY (userId) REFERENCES [AppUsers] (id),
+	CONSTRAINT FK_UserClase_claseId FOREIGN KEY (claseId) REFERENCES [Clase] (id)
+);
+
+INSERT INTO [dbo].[UserClase] (userId, claseId)
+VALUES	(2, 1)	 -- lisa >		salsa principiantes
+		, (6, 1) -- ruthie > 
+		, (8, 1) -- porter > 
+		, (9, 1) -- mayo > 
+		, (10, 1) -- skinner > 
+		, (11, 1) -- davis > 
+		, (13, 1) -- Ricardo >   -- PROFE
+
+		, (2, 3) --lisa >		zumba avanzado
+		, (9, 3) -- mayo >
+		, (5, 3) -- Lois > 
+		, (7, 3) -- todd > 
+		, (10, 3) -- skinner > 
+		, (14, 3) -- samu >      -- PROFE
+
+		, (7, 4) -- todd >		karate niños principiante
+		, (3, 4) -- karen > 
+		, (5, 4) -- Lois > 
+		, (11, 4) -- davis > 
+		, (13, 4) -- Ricardo >  -- PROFE
+
+		, (10, 7) -- skinner > yoga adulto mayor intermedio
+		, (4, 7) -- margo > 
+		, (6, 7) -- ruthie > 
+		, (8, 7) -- porter > 
+		, (12, 7) -- Sergio >			 -- PROFE
+
+		, (8, 5) -- porter > karate adultos intermedio
+		, (9, 5) -- mayo > 
+		, (2, 5) -- lisa > 
+		, (6, 5) -- ruthie >
+		, (10, 5) -- skinner > 
+		, (12, 5) -- Sergio >   -- PROFE
+;
+GO
+------------------------------------------
+CREATE TABLE UserRoles
+(
+	userId INT NOT NULL,
+	roleId INT NOT NULL,
+	
+	CONSTRAINT PK_UserRoles_id PRIMARY KEY (userId, roleId),
+	CONSTRAINT FK_UserRoles_userId FOREIGN KEY (userId) REFERENCES [AppUsers] (id),
+	CONSTRAINT FK_UserRoles_roleId FOREIGN KEY (roleId) REFERENCES Roles (id)
+);
+
+INSERT INTO [dbo].[UserRoles] (userId, roleId)
+VALUES	(1, 1), (1, 2), (1, 3), (2, 2), (3, 2), (4, 2),
+		(5, 2), (6, 2), (7, 2), (8, 2), (9, 2),
+		(10, 2), (11, 2)
+		,(12, 3), (13, 3), (14, 3) -- profes
+;
+GO
+------------------------------------------
+CREATE TABLE ClaseHorario
+(
+	id INT IDENTITY(1,1),
+	claseId INT NOT NULL,
+	sectoId INT NOT NULL,
+	diaId INT NOT NULL,
+	horaId INT NOT NULL,
+	
+	CONSTRAINT FK_ClaseHorario_claseId FOREIGN KEY (claseId) REFERENCES [Clase] (id),
+	CONSTRAINT FK_ClaseHorario_sectoId FOREIGN KEY (sectoId) REFERENCES [Sector] (id),
+	CONSTRAINT FK_ClaseHorario_diaId FOREIGN KEY (diaId) REFERENCES [Dia] (id),
+	CONSTRAINT FK_ClaseHorario_horaId FOREIGN KEY (horaId) REFERENCES [Hora] (id),
+);
+
+INSERT INTO [dbo].[ClaseHorario] ( claseId, sectoId, diaId, horaId )
+VALUES	(1, 3, 1, 1)	-- Salsa principiantes			Piso 2 - A		L	8
+		, (1, 3, 3, 1)	-- Salsa principiantes			Piso 2 - A		X	8
+		, (1, 3, 5, 1)	-- Salsa principiantes			Piso 2 - A		V	8
+
+		, (2, 2, 2, 1)	-- Salsa intermedio				Piso 1 - B		M	8
+		, (2, 2, 4, 1)	-- Salsa intermedio				Piso 1 - B		J	8
+		, (2, 2, 6, 1)	-- Salsa intermedio				Piso 1 - B		S	8
+
+		,(3, 4, 1, 11)	-- 	Zumba avanzado				Piso 2 - B		L	18
+		,(3, 4, 3, 11)	-- 	Zumba avanzado				Piso 2 - B		X	18
+		,(3, 4, 5, 11)	-- 	Zumba avanzado				Piso 2 - B		V	18
+
+		,(4, 3, 2, 11)	-- 	Karate niños principiante		Piso 2 - A		M	18
+		,(4, 3, 4, 11)	-- 	Karate niños principiante		Piso 2 - A		J	18
+		,(4, 3, 6, 11)	-- 	Karate niños principiante		Piso 2 - A		S	18
+
+		,(5, 5, 2, 13)	-- 	Karate adultos intermedio		Piso 2 - C		M	20
+		,(5, 5, 4, 13)	-- 	Karate adultos intermedio		Piso 2 - C		J	20
+		,(5, 5, 6, 13)	-- 	Karate adultos intermedio		Piso 2 - C		S	20
+
+		,(6, 1, 1, 13)	-- 	Karate adultos avanzado			Piso 1 - A		L	20
+		,(6, 1, 3, 13)	-- 	Karate adultos avanzado			Piso 1 - A		x	20
+		,(6, 1, 5, 13)	-- 	Karate adultos avanzado			Piso 1 - A		V	20
+
+		,(7, 1, 3, 3)	-- 	Yoga adulto mayor intermedio	Piso 1 - A		x	10
+		,(7, 1, 6, 3)	-- 	Yoga adulto mayor intermedio	Piso 1 - A		S	10
+		
+;
+GO
+------------------------------------------
 CREATE TABLE Pictures
 (
 	id INT IDENTITY(1,1),
@@ -82,73 +320,5 @@ VALUES	('https://randomuser.me/api/portraits/women/54.jpg', 0, 2),
 ;
 GO
 ------------------------------------------
-CREATE TABLE UserRoles
-(
-	userId INT NOT NULL,
-	roleId INT NOT NULL,
-	
-	CONSTRAINT PK_UserRoles_id PRIMARY KEY (userId, roleId),
-	CONSTRAINT FK_UserRoles_userId FOREIGN KEY (userId) REFERENCES [AppUsers] (id),
-	CONSTRAINT FK_UserRoles_roleId FOREIGN KEY (roleId) REFERENCES Roles (id)
-);
 
-INSERT INTO [dbo].[UserRoles] (userId, roleId)
-VALUES	(1, 1), (1, 2), (1, 3), (2, 2), (3, 2), (4, 2),
-		(5, 2), (6, 2), (7, 2), (8, 2), (9, 2),
-		(10, 2), (11, 2)
-;
-GO
--------------------------------------------
 
-CREATE TABLE UserClase
-(
-	userId INT NOT NULL,
-	claseId INT NOT NULL,
-	
-	CONSTRAINT PK_UserClase_id PRIMARY KEY (userId, claseId),
-	CONSTRAINT FK_UserClase_userId FOREIGN KEY (userId) REFERENCES [AppUsers] (id),
-	CONSTRAINT FK_UserClase_claseId FOREIGN KEY (claseId) REFERENCES [Clase] (id)
-);
-
-INSERT INTO [dbo].[UserClase] (userId, claseId)
-VALUES	(2, 1) -- lisa > salsa princi
-		, (6, 1) -- ruthie > salsa princi
-		, (8, 1) -- porter > salsa princi
-		, (9, 1) -- mayo > salsa princi
-		, (10, 1) -- skinner > salsa princi
-		, (11, 1) -- davis > salsa princi
-		, (13, 1) -- Ricardo > salsa princi -- PROFE
-
-		, (2, 3) --lisa > zumba avanzado
-		, (9, 3) -- mayo > zumba avanzado
-		, (5, 3) -- Lois > zumba avanzado
-		, (7, 3) -- todd > zumba avanzado
-		, (10, 3) -- skinner > zumba avanzado
-		, (14, 3) -- samu > zumba avanzado -- PROFE
-
-		, (7, 4) -- todd > karate niños
-		, (3, 4) -- karen > karate niños
-		, (5, 4) -- Lois > karate niños
-		, (11, 4) -- davis > karate niños
-		, (13, 4) -- Ricardo > karate niños -- PROFE
-
-		, (10, 6) -- skinner > yoga adulto mayor
-		, (4, 6) -- margo > yoga adulto mayor
-		, (6, 6) -- ruthie > yoga adulto mayor
-		, (8, 6) -- porter > yoga adulto mayor
-		, (12, 6) -- Sergio > yoga adulto mayor -- PROFE
-
-		, (8, 5) -- porter > karate adulto
-		, (9, 5) -- mayo > karate adulto
-		, (2, 5) -- lisa > karate adulto
-		, (6, 5) -- ruthie > karate adulto
-		, (10, 5) -- skinner > karate adulto
-		, (12, 5) -- Sergio > karate adulto -- PROFE
-;
-GO
--------------------------------------------
-
-SELECT * FROM [AppUsers]
-SELECT * FROM UserRoles
-SELECT * FROM [Pictures]
-SELECT * FROM [UserClase]
