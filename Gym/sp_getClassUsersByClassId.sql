@@ -1,10 +1,10 @@
 USE Gym;
 GO
 
-DROP PROCEDURE IF EXISTS dbo.sp_getUsersFromClassByClassId;
+DROP PROCEDURE IF EXISTS dbo.sp_getClassUsersByClassId;
 GO
 
-CREATE PROCEDURE dbo.sp_getUsersFromClassByClassId
+CREATE PROCEDURE dbo.sp_getClassUsersByClassId
 (
 	@userType INT		-- 2 member, 3 profe, NULL ambos
 	, @claseId INT
@@ -36,7 +36,7 @@ GO
 
 
 
-EXEC dbo.sp_getUsersFromClassByClassId @userType = null		-- 2 member, 3 profe, NULL ambos
+EXEC dbo.sp_getClassUsersByClassId @userType = 3		-- 2 member, 3 profe, NULL ambos
 								, @claseId = 1;		-- 1 salsa ppte
 
 /*
