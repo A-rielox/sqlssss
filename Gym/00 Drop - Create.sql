@@ -251,17 +251,17 @@ CREATE TABLE ClaseHorario
 (
 	id INT IDENTITY(1,1),
 	claseId INT NOT NULL,
-	sectoId INT NOT NULL,
+	sectorId INT NOT NULL,
 	diaId INT NOT NULL,
 	horaId INT NOT NULL,
 	
 	CONSTRAINT FK_ClaseHorario_claseId FOREIGN KEY (claseId) REFERENCES [Clase] (id),
-	CONSTRAINT FK_ClaseHorario_sectoId FOREIGN KEY (sectoId) REFERENCES [Sector] (id),
+	CONSTRAINT FK_ClaseHorario_sectoId FOREIGN KEY (sectorId) REFERENCES [Sector] (id),
 	CONSTRAINT FK_ClaseHorario_diaId FOREIGN KEY (diaId) REFERENCES [Dia] (id),
 	CONSTRAINT FK_ClaseHorario_horaId FOREIGN KEY (horaId) REFERENCES [Hora] (id),
 );
 
-INSERT INTO [dbo].[ClaseHorario] ( claseId, sectoId, diaId, horaId )
+INSERT INTO [dbo].[ClaseHorario] ( claseId, sectorId, diaId, horaId )
 VALUES	(1, 3, 1, 1)	-- Salsa principiantes			Piso 2 - A		L	8
 		, (1, 3, 3, 1)	-- Salsa principiantes			Piso 2 - A		X	8
 		, (1, 3, 5, 1)	-- Salsa principiantes			Piso 2 - A		V	8
@@ -316,7 +316,10 @@ VALUES	('https://randomuser.me/api/portraits/women/54.jpg', 0, 2),
 		('https://randomuser.me/api/portraits/men/87.jpg', 1, 8),
 		('https://randomuser.me/api/portraits/men/57.jpg', 1, 9),
 		('https://randomuser.me/api/portraits/men/11.jpg', 1, 10),
-		('https://randomuser.me/api/portraits/men/93.jpg', 1, 11)
+		('https://randomuser.me/api/portraits/men/93.jpg', 1, 11),
+		('https://randomuser.me/api/portraits/men/77.jpg', 1, 12),
+		('https://randomuser.me/api/portraits/men/42.jpg', 1, 13),
+		('https://randomuser.me/api/portraits/men/37.jpg', 1, 14)
 ;
 GO
 ------------------------------------------
