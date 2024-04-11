@@ -32,7 +32,11 @@ VALUES	('https://randomuser.me/api/portraits/women/54.jpg', 0, 2),
 		('https://randomuser.me/api/portraits/men/87.jpg', 1, 8),
 		('https://randomuser.me/api/portraits/men/57.jpg', 1, 9),
 		('https://randomuser.me/api/portraits/men/11.jpg', 1, 10),
-		('https://randomuser.me/api/portraits/men/93.jpg', 1, 11)
+		('https://randomuser.me/api/portraits/men/93.jpg', 1, 11),
+
+		('https://randomuser.me/api/portraits/men/77.jpg', 1, 12),
+		('https://randomuser.me/api/portraits/men/42.jpg', 1, 13),
+		('https://randomuser.me/api/portraits/men/37jpg', 1, 14)
 ;
 
 SELECT * 
