@@ -25,14 +25,14 @@ BEGIN
 ;
 	
 	SELECT	ch.claseId AS ClassId
-			, ISNULL(au.KnownAs, 'Sin profesor asignado') AS TeacherName
+			, ISNULL(au.KnownAs, 'No asignado') AS TeacherName
 			, cl.nombre AS ClassName
 			, ISNULL(se.nombreSector, 'Sin sector asignado') AS Sector
 			, ISNULL(di.nombreDia, 'Sin día asignado') AS 'Day'
 			, ISNULL(ho.nombreHora, 0) AS 'Hour'
 			, tc.nombreTipoClase AS ClassType
 			, nc.nombreNivelClase AS ClassLevel
-			, ISNULL(pic.url, 'Sin profesor asignado') AS PictureTeacher
+			, pic.url AS PictureTeacher
 			, ISNULL(tca.cantidadAlumnos, 0) AS NumberOfStudents
 	FROM [ClaseHorario] ch
 	LEFT JOIN [Clase] cl ON ch.claseId = cl.id
