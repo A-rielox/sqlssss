@@ -60,3 +60,26 @@ GO
 
 
 EXEC dbo.sp_getAllClasses;
+
+
+
+/*
+
+--select * from PicturesClass
+select * from [Pictures]
+
+
+SELECT DISTINCT  classId,
+			STUFF(( SELECT  ',''' + url + ''''
+                FROM    ( SELECT
+                                    url
+                          FROM      PicturesClass picc2
+						  where picc2.classId = picc1.classId
+                        ) x
+              FOR
+                XML PATH('')
+              ), 1, 1, '') ClassPictures
+			   
+from PicturesClass picc1
+
+*/
